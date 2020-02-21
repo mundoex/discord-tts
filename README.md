@@ -42,7 +42,7 @@ client.on("message",msg=>{
 * Have [Node.js](https://nodejs.org/en/) Installed
 
 ```bash
-$ git clone https://github.com/mundoex/discord-tts
+$ git clone https://github.com/mundoex/discord-tts.git
 $ npm install
 ```
 Make a pull request with your changes <br>
