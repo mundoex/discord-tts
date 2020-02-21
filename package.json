@@ -1,12 +1,17 @@
 {
   "name": "discord-tts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js module to make your discord bot talk",
+  "keywords": ["discord","bot","discord bot","text","to","speech","text to speech","discord-tts","tts"],
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "https://github.com/mundoex",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mundoex/discord-tts.git"
+  },
   "license": "MIT",
   "dependencies": {
     "google-tts-api": "0.0.4"

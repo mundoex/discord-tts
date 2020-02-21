@@ -37,7 +37,7 @@ function downloadFromInfoCallback(text, lang, speed, stream){
  * @param {Language} lang
  * @param {number} speed
  */
-function getVoiceStream(text, lang, speed=1){
+function getVoiceStream(text, lang="en-GB", speed=1){
     const stream=new Stream.PassThrough();
     downloadFromInfoCallback(text,lang,speed,stream);
     return stream;
@@ -49,7 +49,7 @@ function getVoiceStream(text, lang, speed=1){
  * @param {Language} lang
  * @param {number} speed
  */
-function saveToFile(filePath, text, lang, speed=1){
+function saveToFile(filePath, text, lang="en-GB", speed=1){
     const stream=new Stream.PassThrough();
     const writeStream=fs.createWriteStream(filePath);
     downloadFromInfoCallback(text,lang,speed,stream);
