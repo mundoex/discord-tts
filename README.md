@@ -17,12 +17,12 @@ client.on("ready",()=>{
 
 client.on("message",msg=>{
     if(msg.content==="say test 123"){
-        const broadcast = client.createVoiceBroadcast();
-        var channelId=msg.member.voiceChannelID;
-        var channel=client.channels.get(channelId);
+        const broadcast = client.voice.createBroadcast();
+        var channelId=msg.member.voice.ChannelID;
+        var channel=client.channels.cache.get(channelId);
         channel.join().then(connection => {
-            broadcast.playStream(discordTTS.getVoiceStream("test 123"));
-            const dispatcher=connection.playBroadcast(broadcast);
+            broadcast.play(discordTTS.getVoiceStream("test 123"));
+            const dispatcher=connection.play(broadcast);
         });
     }
 });
