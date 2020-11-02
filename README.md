@@ -18,7 +18,7 @@ client.on("ready",()=>{
 client.on("message",msg=>{
     if(msg.content==="say test 123"){
         const broadcast = client.voice.createBroadcast();
-        var channelId=msg.member.voice.ChannelID;
+        var channelId=msg.member.voice.channelID;
         var channel=client.channels.cache.get(channelId);
         channel.join().then(connection => {
             broadcast.play(discordTTS.getVoiceStream("test 123"));
@@ -30,8 +30,9 @@ client.on("message",msg=>{
 
 # Tested working with:
     OS Windows 10
-    Node.js v8.3.0
-    discord.js v11.4.0
+    Node.js v12.16.1
+    discord.js v^12.2.0
+    @discordjs/opus: github:discordjs/opus,
     ffmpeg v0.0.4
     ffmpeg-binaries v3.2.2-3
     opusscript v0.0.7
