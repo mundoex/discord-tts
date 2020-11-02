@@ -17,11 +17,12 @@ client.on("ready",()=>{
 
 client.on("message",msg=>{
     if(msg.content==="say test 123"){
-        const voiceChannel = msg.member.voice.channel;
-        voiceChannel.join().then(connection => {
-            const stream = discordTTS.getVoiceStream("this is a test cookie");
-            const dispatcher = connection.play(stream);
-            dispatcher.on("finish",()=>voiceChannel.leave())
+        const broadcast = client.voice.createBroadcast();
+        var channelId=msg.member.voice.channelID;
+        var channel=client.channels.cache.get(channelId);
+        channel.join().then(connection => {
+            broadcast.play(discordTTS.getVoiceStream("test 123"));
+            const dispatcher=connection.play(broadcast);
         });
     }
 });
