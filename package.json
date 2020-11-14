@@ -1,6 +1,6 @@
 {
   "name": "discord-tts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Node.js module to make your discord bot talk",
   "keywords": ["discord","bot","discord bot","text","to","speech","text to speech","discord-tts","tts"],
   "main": "index.js",
@@ -14,6 +14,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "google-tts-api": "0.0.4"
+    "google-tts-api": "0.0.5"
   }
 }
