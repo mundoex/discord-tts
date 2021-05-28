@@ -14,19 +14,19 @@
     *  )} Language
 */
 
-var googleTTS = require('google-tts-api');
-const fs=require("fs");
-const https=require("https");
-const Stream=require("stream");
+const googleTTS = require('google-tts-api');
+const fs = require('fs');
+const https = require('https');
+const Stream = require('stream');
 
 /**
  * @param {string} text
  * @param {Language} lang
  * @param {number} speed
  */
-function downloadFromInfoCallback(text, lang, speed, stream){
-    googleTTS(text, lang, speed).then((url)=>{
-        const request = https.get(url, function(response,err) {
+function downloadFromInfoCallback(text, lang, speed, stream) {
+    googleTTS(text, lang, speed).then((url) => {
+    /* const request = */ https.get(url, function(response /* , err */) {
             response.pipe(stream);
         });
     });
@@ -37,9 +37,9 @@ function downloadFromInfoCallback(text, lang, speed, stream){
  * @param {Language} lang
  * @param {number} speed
  */
-function getVoiceStream(text, lang="en-GB", speed=1){
-    const stream=new Stream.PassThrough();
-    downloadFromInfoCallback(text,lang,speed,stream);
+function getVoiceStream(text, lang = 'en-GB', speed = 1) {
+    const stream = new Stream.PassThrough();
+    downloadFromInfoCallback(text, lang, speed, stream);
     return stream;
 }
 
@@ -49,13 +49,13 @@ function getVoiceStream(text, lang="en-GB", speed=1){
  * @param {Language} lang
  * @param {number} speed
  */
-function saveToFile(filePath, text, lang="en-GB", speed=1){
-    const stream=new Stream.PassThrough();
-    const writeStream=fs.createWriteStream(filePath);
-    downloadFromInfoCallback(text,lang,speed,stream);
+function saveToFile(filePath, text, lang = 'en-GB', speed = 1) {
+    const stream = new Stream.PassThrough();
+    const writeStream = fs.createWriteStream(filePath);
+    downloadFromInfoCallback(text, lang, speed, stream);
     stream.pipe(writeStream);
-    stream.on("end",()=>writeStream.close());
+    stream.on('end', () => writeStream.close());
 }
 
-module.exports.getVoiceStream=getVoiceStream;
-module.exports.saveToFile=saveToFile;
+module.exports.getVoiceStream = getVoiceStream;
+module.exports.saveToFile = saveToFile;
