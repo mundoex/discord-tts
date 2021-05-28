@@ -21,38 +21,75 @@ const Stream = require('stream');
 
 /**
  * @param {string} text
- * @param {Language} lang
- * @param {number} speed
+ * @param {PlainObject} cfg
+ * @param {Language} cfg.lang
+ * @param {boolean} cfg.slow
+ * @param {string} cfg.host
+ * @param {number} cfg.timeout
+ * @param {string} cfg.splitPunct
  */
-function downloadFromInfoCallback(text, lang, speed, stream) {
-    googleTTS(text, lang, speed).then((url) => {
-    /* const request = */ https.get(url, function(response /* , err */) {
-            response.pipe(stream);
+function downloadFromInfoCallback(stream, text, {
+  lang, slow, host, timeout, splitPunct
+}) {
+    const urlInfo = googleTTS.getAllAudioUrls(text, {
+      lang, slow, host, timeout, splitPunct
+    })
+    Promise.all(
+      urlInfo.map(({url}) => {
+        return new Promise((resolve, reject) => {
+          https.get(url, (response, err) => {
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(response);
+          });
         });
+      })
+    ).then((responses) => {
+      // Once obtained, perform in order
+      responses.forEach((response) => {
+        response.pipe(stream);
+      });
     });
 }
 
 /**
  * @param {string} text
- * @param {Language} lang
- * @param {number} speed
+ * @param {Language} [lang="en-GB"]
+ * @param {boolean} [slow=false]
+ * @param {string} cfg.host
+ * @param {number} cfg.timeout
+ * @param {string} cfg.splitPunct
  */
-function getVoiceStream(text, lang = 'en-GB', speed = 1) {
+function getVoiceStream(text, {
+  lang = 'en-GB', slow = false, host, timeout, splitPunct
+} = {}) {
     const stream = new Stream.PassThrough();
-    downloadFromInfoCallback(text, lang, speed, stream);
+    downloadFromInfoCallback(stream, text, {
+      lang, slow, host, timeout, splitPunct
+    });
     return stream;
 }
 
 /**
  * @param {string} filePath
  * @param {string} text
- * @param {Language} lang
- * @param {number} speed
+ * @param {PlainObject} cfg
+ * @param {Language} [cfg.lang="en-GB"]
+ * @param {number} [cfg.slow=false]
+ * @param {string} cfg.host
+ * @param {number} cfg.timeout
+ * @param {string} cfg.splitPunct
  */
-function saveToFile(filePath, text, lang = 'en-GB', speed = 1) {
+function saveToFile(filePath, text, {
+  lang = 'en-GB', slow = false, host, timeout, splitPunct
+} = {}) {
     const stream = new Stream.PassThrough();
     const writeStream = fs.createWriteStream(filePath);
-    downloadFromInfoCallback(text, lang, speed, stream);
+    downloadFromInfoCallback(stream, text, {
+      lang, slow, host, timeout, splitPunct
+    });
     stream.pipe(writeStream);
     stream.on('end', () => writeStream.close());
 }
