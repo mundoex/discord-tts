@@ -2,9 +2,20 @@
   "name": "discord-tts",
   "version": "1.0.3",
   "description": "Node.js module to make your discord bot talk",
-  "keywords": ["discord","bot","discord bot","text","to","speech","text to speech","discord-tts","tts"],
+  "keywords": [
+    "discord",
+    "bot",
+    "discord bot",
+    "text",
+    "to",
+    "speech",
+    "text to speech",
+    "discord-tts",
+    "tts"
+  ],
   "main": "index.js",
   "scripts": {
+    "lint": "eslint --report-unused-disable-directives .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "https://github.com/mundoex",
@@ -14,6 +25,9 @@
   },
   "license": "MIT",
   "dependencies": {
-    "google-tts-api": "0.0.6"
+    "google-tts-api": "^2.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.27.0"
   }
 }

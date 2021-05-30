@@ -1,34 +1,32 @@
 # discord-tts
 Node.js module to make your discord bot talk
 
-
-
-# Quick Example
+## Quick Example
 ```js
-const secret = require("./secret.json"); //file with your bot credentials/token/etc
-const discord = require("discord.js");
-const discordTTS=require("discord-tts");
+const secret = require('./secret.json'); //file with your bot credentials/token/etc
+const discord = require('discord.js');
+const discordTTS = require('discord-tts');
 const client = new discord.Client();
 client.login(secret.token);
 
-client.on("ready",()=>{
-    console.log("Online");
+client.on('ready', () => {
+    console.log('Online');
 });
 
-client.on("message",msg=>{
-    if(msg.content==="say test 123"){
+client.on('message', msg => {
+    if(msg.content === 'say test 123'){
         const broadcast = client.voice.createBroadcast();
-        var channelId=msg.member.voice.channelID;
-        var channel=client.channels.cache.get(channelId);
+        const channelId = msg.member.voice.channelID;
+        const channel = client.channels.cache.get(channelId);
         channel.join().then(connection => {
-            broadcast.play(discordTTS.getVoiceStream("test 123"));
-            const dispatcher=connection.play(broadcast);
+            broadcast.play(discordTTS.getVoiceStream('test 123'));
+            const dispatcher = connection.play(broadcast);
         });
     }
 });
 ```
 
-# Tested working with:
+## Tested working with:
     OS Windows 10
     Node.js v12.16.1
     discord.js v^12.2.0
@@ -39,8 +37,8 @@ client.on("message",msg=>{
 
 
 ## Contributing
-* Have [Git](https://git-scm.com/) Installed
-* Have [Node.js](https://nodejs.org/en/) Installed
+- Have [Git](https://git-scm.com/) Installed
+- Have [Node.js](https://nodejs.org/en/) Installed
 
 ```bash
 $ git clone https://github.com/mundoex/discord-tts.git
