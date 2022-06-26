@@ -18,23 +18,13 @@ const googleTTS = require('google-tts-api'); // CommonJS
 const fs = require('fs');
 const Stream = require('stream');
 
-function base64ToBinary(base64Text){
-  const binary=Buffer.from(base64Text,"base64").toString("binary");
-  const buffer=new ArrayBuffer(binary.length);
-  let bytes=new Uint8Array(buffer);
-  let i=0;
-  const bytesLength=buffer.byteLength;
-  for (i; i < bytesLength; i++) {
-      bytes[i]=binary.charCodeAt(i) & 0xFF;
-  }
-  return bytes;
-}
-
 function base64toBinaryStream(base64Text){
-  const binary=base64ToBinary(base64Text);
-  const stream=new Stream.PassThrough();
-  stream.write(binary,"binary");
-  return stream;
+  // Convert base64 stream to binary stream
+  const audioBinaryStream = new Stream.Readable();
+  audioBinaryStream.push(Buffer.from(base64Text, 'base64'));
+  // Indicate end of stream
+  audioBinaryStream.push(null);
+  return audioBinaryStream;
 }
 
 /**
